@@ -4,6 +4,7 @@ import React from "react";
 import styles from "./Navbar.module.css";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 const navItems = [
   { href: "/home", label: "Home" },
@@ -15,6 +16,8 @@ const navItems = [
 ];
 
 export default function Navbar() {
+  const pathname = usePathname();
+
   return (
     <nav className={styles.navbar}>
       <div className={styles.navSection + " " + styles.leftSection}>
@@ -25,7 +28,9 @@ export default function Navbar() {
       <div className={styles.navSection + " " + styles.centerSection}>
         {navItems.map((item) => (
           <Link key={item.href} href={item.href} className={styles.link}>
-            {item.label}
+            <span className={item.href === pathname ? styles.active : ""}>
+              {item.label}
+            </span>
           </Link>
         ))}
       </div>
