@@ -3,6 +3,7 @@ import "@/shared/styles/globals.css";
 import { inter } from "@/shared/utils/fonts";
 import Navbar from "@/shared/components/Navbar/Navbar";
 import styles from "./page.module.css";
+import { AntdRegistry } from "@ant-design/nextjs-registry";
 
 export const metadata: Metadata = {
   title: "GameHub",
@@ -17,8 +18,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} ${styles.body}`}>
-        <Navbar />
-        <div className={styles.container}>{children}</div>
+        <AntdRegistry>
+          <Navbar />
+          <div className={styles.container}>{children}</div>
+        </AntdRegistry>
       </body>
     </html>
   );
