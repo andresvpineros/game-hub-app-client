@@ -1,27 +1,41 @@
 .navbar {
+  position: sticky;
+  z-index: 100;
+  top: 0;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
-  background-color: #f8f9fa;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: rgba(22, 22, 22, 1);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
 }
 
-.section {
+.navSection {
+  height: 60px;
   display: flex;
   align-items: center;
 }
 
-.logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #333;
-  text-decoration: none;
+.leftSection {
+  width: 20%;
+  justify-content: center;
+}
+
+.centerSection {
+  width: 60%;
+  justify-content: left;
+  padding-left: 20px;
+}
+
+.rightSection {
+  width: 20%;
+  justify-content: flex-end;
+  padding-right: 20px;
 }
 
 .link {
   margin: 0 1rem;
-  color: #333;
+  color: #fff;
   text-decoration: none;
   transition: color 0.3s ease;
 }
@@ -30,16 +44,36 @@
   color: #007bff;
 }
 
-.button {
-  padding: 0.5rem 1rem;
-  background-color: #007bff;
-  color: white;
+.searchButton,
+.notificationButton,
+.profileButton {
+  background: none;
   border: none;
-  border-radius: 4px;
+  color: white;
+  font-size: 1.2rem;
+  margin-left: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
-.button:hover {
-  background-color: #0056b3;
+@media (max-width: 1200px) {
+  .leftSection,
+  .rightSection {
+    width: 250px;
+  }
+  .centerSection {
+    width: calc(100% - 500px);
+  }
+}
+
+@media (max-width: 992px) {
+  .navbar {
+    justify-content: center;
+  }
+  .leftSection,
+  .rightSection {
+    display: none;
+  }
+  .centerSection {
+    width: 100%;
+  }
 }

@@ -5,13 +5,16 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #1b1b1d;
     --foreground: #ededed;
   }
 }
 
 html,
 body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
   max-width: 100vw;
   overflow-x: hidden;
 }

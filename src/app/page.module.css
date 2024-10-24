@@ -1,12 +1,10 @@
 .body {
-  background-color: rgb(17, 24, 39);
   color: white;
   min-height: 100vh;
 }
 
 .container {
-  max-width: 1200px;
+  /* max-width: 1200px; */
   margin: 0 auto;
-  padding: 0 1rem;
   width: 100%;
 }
