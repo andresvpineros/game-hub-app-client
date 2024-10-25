@@ -1,9 +1,14 @@
 import type { Metadata } from "next";
-import "@/shared/styles/globals.css";
-import { inter } from "@/shared/utils/fonts";
+import { AntdRegistry } from "@ant-design/nextjs-registry";
 import Navbar from "@/shared/components/Navbar/Navbar";
 import styles from "./page.module.css";
-import { AntdRegistry } from "@ant-design/nextjs-registry";
+import "@/shared/styles/globals.css";
+
+import { config } from "@fortawesome/fontawesome-svg-core";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+config.autoAddCss = false;
+
+import { inter } from "@/shared/utils/fonts";
 
 export const metadata: Metadata = {
   title: "GameHub",

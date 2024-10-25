@@ -5,6 +5,9 @@ import styles from "./Navbar.module.css";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import SearchButton from "./components/SearchButton/SearchButton";
+import NotificationButton from "./components/NotificationButton/NotificationButton";
+import ProfileButton from "./components/ProfileButton/ProfileButton";
 
 const navItems = [
   { href: "/home", label: "Home" },
@@ -35,9 +38,9 @@ export default function Navbar() {
         ))}
       </div>
       <div className={styles.navSection + " " + styles.rightSection}>
-        <button className={styles.searchButton}>🔍</button>
-        <button className={styles.notificationButton}>🔔</button>
-        <button className={styles.profileButton}>👤</button>
+        <SearchButton />
+        <NotificationButton />
+        <ProfileButton />
       </div>
     </nav>
   );
