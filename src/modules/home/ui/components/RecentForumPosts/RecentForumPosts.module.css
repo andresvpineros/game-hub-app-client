@@ -1,0 +1,63 @@
+.container {
+  margin-bottom: 2rem;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 550;
+  margin-bottom: 1rem;
+}
+
+.post {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.postContent {
+  display: flex;
+  align-items: center;
+}
+
+.profileImage {
+  margin-right: 1rem;
+  border-radius: 50%;
+}
+
+.postInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-weight: 550;
+  margin-bottom: 0.25rem;
+}
+
+.author {
+  font-size: 0.9rem;
+}
+
+.authorName {
+  color: #b7b7b7;
+}
+
+.category {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.views {
+  display: flex;
+  align-items: center;
+}
+
+.eyeIcon {
+  margin-right: 0.5rem;
+}
+
+.viewsCount {
+  font-size: 0.9rem;
+  font-weight: 550;
+}

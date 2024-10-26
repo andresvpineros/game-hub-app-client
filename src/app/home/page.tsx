@@ -1,16 +1,15 @@
 import styles from "./page.module.css";
+import { TrendingGames, RecentForumPosts } from "@/modules/home/ui/components";
 
 function HomePage() {
   return (
     <div className={styles.container}>
       <aside className={styles.sidebar + " " + styles.leftSidebar}>
         <div className={styles.sidebarSection}>
-          <h2>Recent Forum Posts</h2>
-          {/* Add forum posts content here */}
+          <RecentForumPosts />
         </div>
         <div className={styles.sidebarSection}>
-          <h2>Trending Games</h2>
-          {/* Add trending games content here */}
+          <TrendingGames />
         </div>
       </aside>
       <main className={styles.mainContent}>
