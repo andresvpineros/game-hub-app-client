@@ -1,7 +1,7 @@
 const SI_SYMBOLS = ["", "K", "M", "B"];
 
 /**
- * Abbreviates a number using SI symbols (k, M, B) for thousands, millions and billions.
+ * Abbreviates a number using SI symbols (K, M, B) for thousands, millions and billions.
  *
  * @param num - The number to abbreviate.
  * @returns A string representation of the abbreviated number.
