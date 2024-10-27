@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import styles from "../../AuthenticationModal.module.css";
-import { Button, Checkbox, Flex, Form, Input } from "antd";
+import { Button, Checkbox, Flex, Form, Input, message } from "antd";
 import styled from "styled-components";
 import type { FormProps } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,6 +13,8 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { Divider } from "antd";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { AuthenticateUserUseCase } from "@/modules/auth/domain/usecases/authenticateUser.usecase";
 
 const StyledPasswordInput = styled(Input.Password)`
   &.ant-input-password .ant-input::placeholder {
@@ -39,9 +41,25 @@ type FieldType = {
 
 export default function Login() {
   const [form] = Form.useForm();
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const authenticateUser = new AuthenticateUserUseCase();
 
-  const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
-    console.log("Success:", values);
+  const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
+    setLoading(true);
+    try {
+      await authenticateUser.execute(values.username!, values.password!);
+      message.success("Login successful");
+      router.push("/home");
+    } catch (error) {
+      if (error instanceof Error) {
+        message.error(error.message);
+      } else {
+        message.error("An unexpected error occurred");
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (
@@ -95,6 +113,7 @@ export default function Login() {
           <Input
             placeholder="Enter your username..."
             className={styles.authenticationFormInput}
+            size="large"
           />
         </Form.Item>
         <Form.Item<FieldType>
@@ -105,6 +124,7 @@ export default function Login() {
           <StyledPasswordInput
             placeholder="Enter your password..."
             className={styles.authenticationFormInput}
+            size="large"
           />
         </Form.Item>
 
@@ -126,11 +146,13 @@ export default function Login() {
           <Button
             block
             type="primary"
+            size="large"
             htmlType="submit"
             style={{
               marginBottom: "10px",
               backgroundColor: "#00b9ff",
             }}
+            loading={loading}
           >
             Log in
           </Button>
