@@ -1,5 +1,11 @@
 import { UserRepository } from "../../data/repositories/user.repository";
 
+interface AuthenticatedUser {
+  id: string;
+  email: string;
+  username: string;
+}
+
 export class AuthenticateUserUseCase {
   private userRepository: UserRepository;
 
@@ -7,15 +13,15 @@ export class AuthenticateUserUseCase {
     this.userRepository = new UserRepository();
   }
 
-  async execute(email: string, password: string) {
+  async execute(
+    identifier: string,
+    password: string
+  ): Promise<AuthenticatedUser> {
     try {
-      const { token, user } = await this.userRepository.authenticate(
-        email,
+      const { user } = await this.userRepository.authenticate(
+        identifier,
         password
       );
-
-      sessionStorage.setItem("token", token);
-      sessionStorage.setItem("user", JSON.stringify(user));
 
       return user;
     } catch (error) {

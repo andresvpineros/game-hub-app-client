@@ -1,7 +1,11 @@
-import styles from "./page.module.css";
 import { TrendingGames, RecentForumPosts } from "@/modules/home/ui/components";
+import styles from "./page.module.css";
+import { getServerSession } from "next-auth/next";
 
-function HomePage() {
+export default function HomePage() {
+  const session = getServerSession();
+  console.log(session, "SESSION");
+
   return (
     <div className={styles.container}>
       <aside className={styles.sidebar + " " + styles.leftSidebar}>
@@ -30,5 +34,3 @@ function HomePage() {
     </div>
   );
 }
-
-export default HomePage;

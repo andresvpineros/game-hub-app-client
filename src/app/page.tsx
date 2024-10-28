@@ -1,16 +1,15 @@
 import { redirect } from "next/navigation";
-import { getSession } from "@/shared/utils/getSession";
+import { useAuth } from "@/shared/hooks/useAuth";
 /*
   1. Check authentication status
   2. Handle any necessary data prefetching
   3. Provide different redirects based on user state
 */
-export default async function Home() {
-  const session = await getSession();
-  console.log(session);
+export default function Home() {
+  const { isAuthenticated } = useAuth();
 
-  if (!session) {
-    console.log(session);
+  if (!isAuthenticated) {
+    console.log(isAuthenticated);
     redirect("/home");
   }
 

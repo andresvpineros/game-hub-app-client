@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import styles from "../../AuthenticationModal.module.css";
-import { Button, Checkbox, Flex, Form, Input, message } from "antd";
+import Image from "next/image";
+
 import styled from "styled-components";
+import { Button, Checkbox, Flex, Form, Input, message } from "antd";
 import type { FormProps } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -12,9 +13,10 @@ import {
   faFacebook,
 } from "@fortawesome/free-brands-svg-icons";
 import { Divider } from "antd";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { AuthenticateUserUseCase } from "@/modules/auth/domain/usecases/authenticateUser.usecase";
+
+import { useAuthStore } from "@/shared/store/authStore";
+
+import styles from "../../AuthenticationModal.module.css";
 
 const StyledPasswordInput = styled(Input.Password)`
   &.ant-input-password .ant-input::placeholder {
@@ -34,23 +36,25 @@ const StyledDivider = styled(Divider)`
 `;
 
 type FieldType = {
-  username?: string;
-  password?: string;
-  remember?: string;
+  identifier: string;
+  password: string;
+  remember?: boolean;
 };
 
 export default function Login() {
   const [form] = Form.useForm();
-  const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const authenticateUser = new AuthenticateUserUseCase();
+  const { login, socialLogin, isLoading, setActiveView } = useAuthStore();
 
   const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
     setLoading(true);
     try {
-      await authenticateUser.execute(values.username!, values.password!);
-      message.success("Login successful");
-      router.push("/home");
+      console.log(values, "VALUES");
+      await login({
+        identifier: values.identifier,
+        password: values.password,
+        remember: values.remember,
+      });
     } catch (error) {
       if (error instanceof Error) {
         message.error(error.message);
@@ -60,6 +64,10 @@ export default function Login() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSocialLogin = (provider: "google" | "discord" | "facebook") => {
+    socialLogin(provider);
   };
 
   const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (
@@ -81,42 +89,59 @@ export default function Login() {
       </div>
 
       <div className={styles.authenticationModalSocialMedia}>
-        <div className={styles.authenticationModalSocialMediaItem}>
+        <button
+          className={styles.authenticationModalSocialMediaItem}
+          onClick={() => handleSocialLogin("facebook")}
+          disabled={isLoading}
+        >
           <FontAwesomeIcon icon={faFacebook} />
-        </div>
-        <div className={styles.authenticationModalSocialMediaItem}>
+        </button>
+        <button
+          className={styles.authenticationModalSocialMediaItem}
+          onClick={() => handleSocialLogin("google")}
+          disabled={isLoading}
+        >
           <FontAwesomeIcon icon={faGoogle} />
-        </div>
-        <div className={styles.authenticationModalSocialMediaItem}>
+        </button>
+        <button
+          className={styles.authenticationModalSocialMediaItem}
+          onClick={() => handleSocialLogin("discord")}
+          disabled={isLoading}
+        >
           <FontAwesomeIcon icon={faDiscord} />
-        </div>
+        </button>
       </div>
 
       <StyledDivider plain>OR</StyledDivider>
 
-      <Form
+      <Form<FieldType>
         form={form}
         name="login"
         layout="vertical"
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
-        autoComplete="off"
         style={{ color: "white" }}
         initialValues={{ remember: true }}
         className={styles.authenticationForm}
+        // disabled={isLoading}
       >
-        <Form.Item<FieldType>
-          label={<label style={{ color: "white" }}>Username</label>}
-          name="username"
-          rules={[{ required: true, message: "Please input your Username!" }]}
+        <Form.Item
+          label={<label style={{ color: "white" }}>Username or Email</label>}
+          name="identifier"
+          rules={[
+            {
+              required: true,
+              message: "Please input your email or username!",
+            },
+          ]}
         >
           <Input
-            placeholder="Enter your username..."
+            placeholder="Enter your email or username..."
             className={styles.authenticationFormInput}
             size="large"
           />
         </Form.Item>
-        <Form.Item<FieldType>
+        <Form.Item
           label={<label style={{ color: "white" }}>Password</label>}
           name="password"
           rules={[{ required: true, message: "Please input your Password!" }]}
@@ -134,8 +159,12 @@ export default function Login() {
               <Checkbox style={{ color: "#cacaca" }}>Remember me</Checkbox>
             </Form.Item>
             <a
-              href=""
-              style={{ textDecoration: "underline", color: "#00b9ff" }}
+              onClick={() => setActiveView("forgot-password")}
+              style={{
+                textDecoration: "underline",
+                color: "#00b9ff",
+                cursor: "pointer",
+              }}
             >
               Forgot password?
             </a>

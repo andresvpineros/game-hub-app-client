@@ -1,13 +1,15 @@
 "use client";
 
 import React from "react";
-import styles from "./Navbar.module.css";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+
 import SearchButton from "./components/SearchButton/SearchButton";
 import NotificationButton from "./components/NotificationButton/NotificationButton";
 import ProfileButton from "./components/ProfileButton/ProfileButton";
+
+import styles from "./Navbar.module.css";
 
 const navItems = [
   { href: "/home", label: "Home" },

@@ -1,9 +1,12 @@
 "use client";
 
 import React from "react";
+
 import { Modal } from "antd";
-import Login from "./components/Login/Login";
 import styled from "styled-components";
+
+import Login from "./components/Login/Login";
+import { useAuthStore } from "@/shared/store/authStore";
 
 const StyledModal = styled(Modal)`
   .ant-modal-close {
@@ -23,6 +26,8 @@ export default function AuthenticationModal({
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
 }) {
+  const { activeView } = useAuthStore();
+
   const handleCloseModal = () => {
     setIsOpen(false);
   };
@@ -36,7 +41,7 @@ export default function AuthenticationModal({
       cancelButtonProps={{ style: { backgroundColor: "red" } }}
       styles={{ mask: { backgroundColor: "rgba(0, 0, 0, 0.5)" } }}
     >
-      <Login />
+      {activeView === "login" && <Login />}
     </StyledModal>
   );
 }

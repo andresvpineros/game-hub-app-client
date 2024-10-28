@@ -4,23 +4,19 @@ const mockUsers = [
   {
     id: "1",
     username: "andresvpineros",
-    email: "user1@example.com",
-    password: "password123",
-  },
-  {
-    id: "2",
-    username: "tecnomaster109",
-    email: "user2@example.com",
-    password: "password456",
+    email: "andresvpineros@example.com",
+    password: "12345",
   },
 ];
 
 export class UserRepository {
-  async authenticate(email: string, password: string) {
+  async authenticate(identifier: string, password: string) {
     await new Promise((resolve) => setTimeout(resolve, 300));
 
     const user = mockUsers.find(
-      (u) => u.email === email && u.password === password
+      (u) =>
+        (u.email === identifier || u.username === identifier) &&
+        u.password === password
     );
 
     if (!user) {
@@ -28,6 +24,7 @@ export class UserRepository {
     }
 
     const token = `mock_token_${user.id}`;
+
     return {
       token,
       user: fromJsonToUserAdapter(user),

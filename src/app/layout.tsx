@@ -1,33 +1,42 @@
 import type { Metadata } from "next";
+import { getServerSession } from "next-auth";
+
 import { AntdRegistry } from "@ant-design/nextjs-registry";
+import { config } from "@fortawesome/fontawesome-svg-core";
+
 import Navbar from "@/shared/components/Navbar/Navbar";
+import { ClientProvider } from "@/shared/providers/ClientProvider";
+import { inter } from "@/shared/utils/fonts";
+import { authOptions } from "./api/auth/[...nextauth]/route";
+
 import styles from "./page.module.css";
 import "@/shared/styles/globals.css";
-
-import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
-config.autoAddCss = false;
 
-import { inter } from "@/shared/utils/fonts";
+config.autoAddCss = false;
 
 export const metadata: Metadata = {
   title: "GameHub",
   description: "Tu centro de juegos social",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getServerSession(authOptions);
+
   return (
     <html lang="en">
-      <body className={`${inter.className} ${styles.body}`}>
+      <ClientProvider session={session}>
         <AntdRegistry>
-          <Navbar />
-          <div className={styles.container}>{children}</div>
+          <body className={`${inter.className} ${styles.body}`}>
+            <Navbar />
+            <div className={styles.container}>{children}</div>
+          </body>
         </AntdRegistry>
-      </body>
+      </ClientProvider>
     </html>
   );
 }
