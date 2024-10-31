@@ -7,7 +7,7 @@ import { config } from "@fortawesome/fontawesome-svg-core";
 import Navbar from "@/shared/components/Navbar/Navbar";
 import { ClientProvider } from "@/shared/providers/ClientProvider";
 import { inter } from "@/shared/utils/fonts";
-import { authOptions } from "./api/auth/[...nextauth]/route";
+import { authOptions } from "./api/auth/[...nextauth]/auth-options";
 
 import styles from "./page.module.css";
 import "@/shared/styles/globals.css";
