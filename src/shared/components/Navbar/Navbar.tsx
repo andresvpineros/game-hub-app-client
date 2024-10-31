@@ -10,6 +10,8 @@ import NotificationButton from "./components/NotificationButton/NotificationButt
 import ProfileButton from "./components/ProfileButton/ProfileButton";
 
 import styles from "./Navbar.module.css";
+import { useAuth } from "@/shared/hooks/useAuth";
+import AuthenticationActions from "./components/AuthenticationActions/AuthenticationButton";
 
 const navItems = [
   { href: "/home", label: "Home" },
@@ -22,6 +24,7 @@ const navItems = [
 
 export default function Navbar() {
   const pathname = usePathname();
+  const { isAuthenticated } = useAuth();
 
   return (
     <nav className={styles.navbar}>
@@ -41,8 +44,14 @@ export default function Navbar() {
       </div>
       <div className={styles.navSection + " " + styles.rightSection}>
         <SearchButton />
-        <NotificationButton />
-        <ProfileButton />
+        {isAuthenticated ? (
+          <>
+            <NotificationButton />
+            <ProfileButton />
+          </>
+        ) : (
+          <AuthenticationActions />
+        )}
       </div>
     </nav>
   );

@@ -126,17 +126,19 @@ export default function Login() {
         // disabled={isLoading}
       >
         <Form.Item
-          label={<label style={{ color: "white" }}>Username or Email</label>}
+          label={
+            <label style={{ color: "white" }}>Username or email address</label>
+          }
           name="identifier"
           rules={[
             {
               required: true,
-              message: "Please input your email or username!",
+              message: "Please input your username or email address!",
             },
           ]}
         >
           <Input
-            placeholder="Enter your email or username..."
+            placeholder="Enter your username or email address..."
             className={styles.authenticationFormInput}
             size="large"
           />

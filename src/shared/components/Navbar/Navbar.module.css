@@ -94,6 +94,33 @@
   border-radius: 50%;
 }
 
+.authenticationActions {
+  display: flex;
+  gap: 10px;
+  margin-left: 1rem;
+}
+
+.logInButton {
+  font-weight: 600 !important;
+  border-color: #fff !important;
+}
+
+.logInButton:hover {
+  color: #0ac4ff !important;
+  border-color: #0ac4ff !important;
+}
+
+.signUpButton {
+  background-color: #0ac4ff !important;
+  border-color: #0ac4ff !important;
+  font-weight: 600 !important;
+}
+
+.signUpButton:hover {
+  color: #fff !important;
+  border-color: #fff !important;
+}
+
 @media (max-width: 1200px) {
   .leftSection,
   .rightSection {
