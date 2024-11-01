@@ -1,12 +1,14 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 
 import { Modal } from "antd";
 import styled from "styled-components";
 
-import Login from "./components/Login/Login";
 import { useAuthStore } from "@/shared/store/authStore";
+import Login from "./components/Login/Login";
+import Signup from "./components/Signup/Signup";
+import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 
 const StyledModal = styled(Modal)`
   .ant-modal-close {
@@ -27,9 +29,11 @@ export default function AuthenticationModal({
   setIsOpen: (isOpen: boolean) => void;
 }) {
   const { activeView } = useAuthStore();
+  const [resetKey, setResetKey] = useState(0);
 
   const handleCloseModal = () => {
     setIsOpen(false);
+    setResetKey((prev) => prev + 1);
   };
 
   return (
@@ -41,7 +45,9 @@ export default function AuthenticationModal({
       cancelButtonProps={{ style: { backgroundColor: "red" } }}
       styles={{ mask: { backgroundColor: "rgba(0, 0, 0, 0.5)" } }}
     >
-      {activeView === "login" && <Login />}
+      {activeView === "login" && <Login key={resetKey} />}
+      {activeView === "signup" && <Signup key={resetKey} />}
+      {activeView === "forgot-password" && <ForgotPassword key={resetKey} />}
     </StyledModal>
   );
 }

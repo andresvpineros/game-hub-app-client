@@ -1,58 +1,29 @@
-"use client";
-
 import React, { useEffect } from "react";
 import Image from "next/image";
-
-import styled from "styled-components";
-import { Button, Checkbox, Flex, Form, Input, message } from "antd";
-import type { FormProps } from "antd";
+import styles from "../../AuthenticationModal.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faFacebook,
   faGoogle,
   faDiscord,
-  faFacebook,
 } from "@fortawesome/free-brands-svg-icons";
-import { Divider } from "antd";
-
 import { useAuthStore } from "@/shared/store/authStore";
-
-import styles from "../../AuthenticationModal.module.css";
-
-const StyledPasswordInput = styled(Input.Password)`
-  &.ant-input-password .ant-input::placeholder {
-    color: #999 !important;
-  }
-
-  &.ant-input-password .ant-input-suffix .anticon {
-    color: #999 !important;
-  }
-`;
-
-const StyledDivider = styled(Divider)`
-  border-color: #cacaca !important;
-  border-width: 1px !important;
-  color: #cacaca !important;
-  font-size: 10px;
-`;
+import { StyledDivider, StyledPasswordInput } from "../../styles";
+import { Button, Form, FormProps, Input, message } from "antd";
 
 type FieldType = {
-  identifier: string;
+  username: string;
+  email: string;
   password: string;
-  remember?: boolean;
 };
 
-export default function Login() {
+export default function Signup() {
   const [form] = Form.useForm();
-  const { login, socialLogin, isLoading, setActiveView } = useAuthStore();
+  const { socialLogin, isLoading, setActiveView } = useAuthStore();
 
   const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
     try {
       console.log(values, "VALUES");
-      await login({
-        identifier: values.identifier,
-        password: values.password,
-        remember: values.remember,
-      });
     } catch (error) {
       if (error instanceof Error) {
         message.error(error.message);
@@ -82,13 +53,15 @@ export default function Login() {
         <Image src="/images/logo.png" alt="logo" width={180} height={55} />
       </div>
       <div className={styles.authenticationModalHeader}>
-        <h1>Welcome to the game</h1>
+        <h1>Create your account</h1>
         <p className={styles.authenticationModalHeaderDescription}>
-          Please enter your details to interact with the community
+          Please enter your details to create an account
         </p>
       </div>
 
-      <p className={styles.authenticationModalSocialMediaTitle}>Login with:</p>
+      <p className={styles.authenticationModalSocialMediaTitle}>
+        Register with:
+      </p>
       <div className={styles.authenticationModalSocialMedia}>
         <button
           className={styles.authenticationModalSocialMediaItem}
@@ -126,19 +99,30 @@ export default function Login() {
         className={styles.authenticationForm}
       >
         <Form.Item
-          label={
-            <label style={{ color: "white" }}>Username or email address</label>
-          }
-          name="identifier"
+          label={<label style={{ color: "white" }}>Username</label>}
+          name="username"
           rules={[
             {
               required: true,
-              message: "Please input your username or email address!",
+              message: "Please input your username!",
             },
           ]}
         >
           <Input
-            placeholder="Enter your username or email address..."
+            placeholder="Enter your username..."
+            className={styles.authenticationFormInput}
+            size="large"
+          />
+        </Form.Item>
+        <Form.Item
+          label={<label style={{ color: "white" }}>Email address</label>}
+          name="email"
+          rules={[
+            { required: true, message: "Please input your email address!" },
+          ]}
+        >
+          <Input
+            placeholder="Enter your email address..."
             className={styles.authenticationFormInput}
             size="large"
           />
@@ -146,7 +130,7 @@ export default function Login() {
         <Form.Item
           label={<label style={{ color: "white" }}>Password</label>}
           name="password"
-          rules={[{ required: true, message: "Please input your Password!" }]}
+          rules={[{ required: true, message: "Please input your password!" }]}
         >
           <StyledPasswordInput
             placeholder="Enter your password..."
@@ -154,25 +138,18 @@ export default function Login() {
             size="large"
           />
         </Form.Item>
-
-        <Form.Item>
-          <Flex justify="space-between" align="center">
-            <Form.Item name="remember" valuePropName="checked" noStyle>
-              <Checkbox style={{ color: "#cacaca" }}>Remember me</Checkbox>
-            </Form.Item>
-            <a
-              onClick={() => setActiveView("forgot-password")}
-              style={{
-                textDecoration: "underline",
-                color: "#00b9ff",
-                cursor: "pointer",
-              }}
-            >
-              Forgot password?
-            </a>
-          </Flex>
+        <Form.Item
+          name="confirm"
+          label={<label style={{ color: "white" }}>Confirm Password</label>}
+          dependencies={["password"]}
+          rules={[{ required: true, message: "Please confirm your password!" }]}
+        >
+          <StyledPasswordInput
+            placeholder="Confirm your password..."
+            className={styles.authenticationFormInput}
+            size="large"
+          />
         </Form.Item>
-
         <Form.Item>
           <Button
             block
@@ -182,18 +159,19 @@ export default function Login() {
             className={styles.authenticationFormButton}
             loading={isLoading}
           >
-            Log In
+            Sign Up
           </Button>
-          <span style={{ color: "#cacaca" }}>
-            Don&apos;t have an account yet?
-          </span>{" "}
+          <span style={{ color: "#cacaca" }}>Already have an account?</span>{" "}
           <a
-            onClick={() => setActiveView("signup")}
+            onClick={() => setActiveView("login")}
             style={{ fontWeight: "bold", color: "#00b9ff" }}
           >
-            Register now!
+            Log in now!
           </a>
         </Form.Item>
+        <p style={{ color: "#cacaca" }}>
+          By creating an account, you agree to our Terms of Service.
+        </p>
       </Form>
     </div>
   );

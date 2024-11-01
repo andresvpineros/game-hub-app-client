@@ -12,10 +12,10 @@ interface AuthStore {
   isLoading: boolean;
   isInitialized: boolean;
   error: string | null;
-  activeView: "login" | "register" | "forgot-password";
+  activeView: "login" | "signup" | "forgot-password";
 
   setModalOpen: (open: boolean) => void;
-  setActiveView: (view: "login" | "register" | "forgot-password") => void;
+  setActiveView: (view: "login" | "signup" | "forgot-password") => void;
   clearError: () => void;
 
   login: (credentials: LoginCredentials) => Promise<void>;

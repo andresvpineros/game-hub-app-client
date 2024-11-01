@@ -28,6 +28,10 @@
   color: #999 !important;
 }
 
+.authenticationModalSocialMediaTitle {
+  color: #cacaca;
+}
+
 .authenticationModalSocialMedia {
   display: flex;
   justify-content: center;
@@ -46,6 +50,12 @@
 
 .authenticationModalDivider {
   color: #999 !important;
+}
+
+.authenticationFormButton {
+  font-weight: bold !important;
+  background-color: #00b9ff !important;
+  margin-bottom: 10px !important;
 }
 
 .authenticationModalDivider.ant-divider-with-text-center::before,

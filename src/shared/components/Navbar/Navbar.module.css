@@ -101,7 +101,7 @@
 }
 
 .logInButton {
-  font-weight: 600 !important;
+  font-weight: 500 !important;
   border-color: #fff !important;
 }
 
@@ -113,7 +113,7 @@
 .signUpButton {
   background-color: #0ac4ff !important;
   border-color: #0ac4ff !important;
-  font-weight: 600 !important;
+  font-weight: 500 !important;
 }
 
 .signUpButton:hover {

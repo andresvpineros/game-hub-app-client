@@ -5,10 +5,16 @@ import { useAuthStore } from "@/shared/store/authStore";
 import styles from "../../Navbar.module.css";
 
 export default function AuthenticationActions() {
-  const { isModalOpen, setModalOpen } = useAuthStore();
+  const { isModalOpen, setModalOpen, setActiveView } = useAuthStore();
 
-  const handleOpenModal = () => {
+  const handleOpenLoginModal = () => {
     setModalOpen(true);
+    setActiveView("login");
+  };
+
+  const handleOpenSignupModal = () => {
+    setModalOpen(true);
+    setActiveView("signup");
   };
 
   return (
@@ -16,14 +22,14 @@ export default function AuthenticationActions() {
       <div className={styles.authenticationActions}>
         <Button
           size="large"
-          onClick={handleOpenModal}
+          onClick={handleOpenLoginModal}
           className={styles.logInButton}
         >
           Log In
         </Button>
         <Button
           size="large"
-          onClick={handleOpenModal}
+          onClick={handleOpenSignupModal}
           className={styles.signUpButton}
         >
           Sign Up
