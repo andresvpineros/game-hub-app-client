@@ -5,13 +5,17 @@ import Image from "next/image";
 
 import styles from "../../Navbar.module.css";
 import { useAuthStore } from "@/shared/store/authStore";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function ProfileButton() {
-  const { logout, isLoading } = useAuthStore();
+  const { data: session } = useSession();
+  const router = useRouter();
+  const { isLoading } = useAuthStore();
 
-  const handleCloseSession = async () => {
+  const redirectToUserProfile = async () => {
     try {
-      await logout();
+      router.push(`/user/${session?.user?.username}`);
     } catch (error) {
       console.error("Logout failed:", error);
     }
@@ -20,7 +24,7 @@ export default function ProfileButton() {
   return (
     <button
       className={styles.profileButton}
-      onClick={handleCloseSession}
+      onClick={redirectToUserProfile}
       disabled={isLoading}
     >
       <Image

@@ -3,7 +3,7 @@ import { fromJsonToUserAdapter } from "../adapters/fromJsonToUser.adapter";
 const mockUsers = [
   {
     id: "1",
-    username: "andresvpineros",
+    username: "iEk1nox",
     email: "andresvpineros@example.com",
     password: "12345",
   },

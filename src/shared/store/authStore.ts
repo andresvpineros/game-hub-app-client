@@ -73,11 +73,12 @@ export const useAuthStore = create<AuthStore>((set) => ({
 
   logout: async () => {
     set({ isLoading: true });
+
     try {
       const result = await signOut({ redirect: false });
 
       if (result) {
-        window.location.reload();
+        window.location.href = "/";
       }
     } finally {
       set({ isLoading: false });
